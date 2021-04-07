@@ -3,31 +3,12 @@ const BACK = 'card_back';
 const CARD = 'card';
 const ICON = 'icon';
 
-let techs = ['bootstrap',
-    'css',
-    'html',
-    'electron',
-    'firebase',
-    'javascript',
-    'jquery',
-    'mongo',
-    'node',
-    'react'];
-
-let cards = null;
-
 startGame();
 
 function startGame() {
 
-    //  coloca em cards todas as 20 cartas
-    cards = createCardsFromTechs(techs);
-
-    //  embaralha as cartas
-    shuffleCards(cards);
-
     // cria as cartas do tabuleiro
-    initializeCards(cards);
+    initializeCards(game.createCardsFromTechs());
     
 }
 
@@ -35,7 +16,7 @@ function initializeCards(cards) {
     let gameBoard = document.getElementById('gameBoard');
 
     // cria um elemento html para cada carta em cards
-    cards.forEach( card => {
+    game.cards.forEach( card => {
 
         // cria a div
         let cardElement = document.createElement('div')
@@ -100,61 +81,10 @@ function createCardFace(face, card, element) {
     element.appendChild(cardElementFace)
 }
 
-function shuffleCards(cards) {
-
-    // index começa com o último elemento
-    let currentIndex = cards.length;
-    let randomIndex = 0;
-
-    // loop enquanto currentIndex for maior que 0
-    while(currentIndex > 0) {
-
-        // atribui ao randomIndex um número aleatório relacionado com o index do array cards
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        // maneira de inverter valores com JS [a, b] = [b, a]
-        [cards[randomIndex], cards[currentIndex]] = [cards[currentIndex], cards[randomIndex]];
-    }
-}
 
 
-function createCardsFromTechs(techs) {
 
-    //  array com todos os pares
-    let cards = [];
 
-    // para cada tech, cria um par e coloca em cards 
-    techs.forEach((tech) => {
-        cards.push(createPairFromTech(tech));
-    });
-
-    // desmembra os pares (arrays) dentro de cards e retorna todos os 20 elementos
-    return cards.flatMap(pair => pair);
-
-}
-
-function createPairFromTech(tech) {
-
-    // retorna um array com dois objetos para cada tech
-    return [{
-        id: createIdWithTech(tech),
-        icon: tech,
-        flipped: false
-    }, {
-        id: createIdWithTech(tech),
-        icon: tech,
-        flipped: false
-    }]
-
-}
-
-function createIdWithTech(tech) {
-
-    // cria um numero inteiro randomico e concatena com a tech
-    return tech + parseInt(Math.random() * 1000);
-
-}
 
 function flipCard() {
 
