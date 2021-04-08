@@ -9,14 +9,14 @@ function startGame() {
 
     // cria as cartas do tabuleiro
     initializeCards(game.createCardsFromTechs());
-    
+
 }
 
 function initializeCards(cards) {
     let gameBoard = document.getElementById('gameBoard');
 
     // cria um elemento html para cada carta em cards
-    game.cards.forEach( card => {
+    game.cards.forEach(card => {
 
         // cria a div
         let cardElement = document.createElement('div')
@@ -61,7 +61,7 @@ function createCardFace(face, card, element) {
     if (face === FRONT) {
 
         // cria o elemento img
-        let iconElement= document.createElement('img');
+        let iconElement = document.createElement('img');
 
         // adiciona a classe
         iconElement.classList.add(ICON);
@@ -81,13 +81,38 @@ function createCardFace(face, card, element) {
     element.appendChild(cardElementFace)
 }
 
-
-
-
-
-
 function flipCard() {
 
-    // adiciona a classe flip para virar a carta
-    this.classList.add('flip')
+    // quando a carta for clicada e colocada em firstCard ou secondCard 
+    if (game.setCard(this.id)) {
+
+        // adiciona a classe flip para virar a carta
+        this.classList.add('flip')
+
+        // checando se as cartas são iguais
+        if (game.checkMatch()) {
+
+            // destravando as cartas
+            game.clearCards()
+
+
+        } else {
+
+            setTimeout(() => {
+
+                const firstCardView = document.getElementById(game.firstCard.id);
+                const secondCardView = document.getElementById(game.secondCard.id);
+
+                // removendo a classe flip caso não  haja match
+                firstCardView.classList.remove('flip');
+                secondCardView.classList.remove('flip');
+
+                // limpando as cartas
+                game.clearCards();
+            }, 1000);
+
+
+        };
+
+    };
 }
