@@ -13,13 +13,16 @@ function startGame() {
 }
 
 function initializeCards(cards) {
-    let gameBoard = document.getElementById('gameBoard');
+    const gameBoard = document.getElementById('gameBoard');
+
+    // limpa o game board
+    gameBoard.innerHTML = '';
 
     // cria um elemento html para cada carta em cards
     game.cards.forEach(card => {
 
         // cria a div
-        let cardElement = document.createElement('div')
+        const cardElement = document.createElement('div')
 
         // atribui o id de card para o elemento html
         cardElement.id = card.id
@@ -52,7 +55,7 @@ function createCardContent(card, cardElement) {
 function createCardFace(face, card, element) {
 
     // cria o elemento div de cada face
-    let cardElementFace = document.createElement('div');
+    const cardElementFace = document.createElement('div');
 
     // adiciona a classe
     cardElementFace.classList.add(face);
@@ -61,7 +64,7 @@ function createCardFace(face, card, element) {
     if (face === FRONT) {
 
         // cria o elemento img
-        let iconElement = document.createElement('img');
+        const iconElement = document.createElement('img');
 
         // adiciona a classe
         iconElement.classList.add(ICON);
@@ -78,7 +81,7 @@ function createCardFace(face, card, element) {
     }
 
     // colocar elemento
-    element.appendChild(cardElementFace)
+    element.appendChild(cardElementFace);
 }
 
 function flipCard() {
@@ -87,7 +90,7 @@ function flipCard() {
     if (game.setCard(this.id)) {
 
         // adiciona a classe flip para virar a carta
-        this.classList.add('flip')
+        this.classList.add('flip');
 
         // se houver a segunda carta
         if (game.secondCard) {
@@ -96,7 +99,15 @@ function flipCard() {
             if (game.checkMatch()) {
 
                 // destravar as cartas
-                game.clearCards()
+                game.clearCards();
+
+                // checar game over
+                if (game.checkGameOver()) {
+
+                    // mostrar a tela de game over
+                    const gameOverLayer = document.getElementById('gameover');
+                    gameOverLayer.style.display = 'flex';
+                };
 
             // se não, desvirar as cartas
             } else {
@@ -113,12 +124,20 @@ function flipCard() {
                     // limpando as cartas
                     game.unflipCards();
                 }, 1000);
-
-
             };
-        }
-
-
-
+        };
     };
+}
+
+function restart() {
+
+    // remover as cartas das variáveis
+    game.clearCards();
+
+    // iniciar o game
+    startGame();
+
+    // remover a tela de game over
+    const gameOverLayer = document.getElementById('gameover');
+    gameOverLayer.style.display = 'none';
 }

@@ -4,6 +4,19 @@ let game = {
     firstCard: null,
     secondCard: null,
 
+    techs: ['bootstrap',
+        'css',
+        'html',
+        'electron',
+        'firebase',
+        'javascript',
+        'jquery',
+        'mongo',
+        'node',
+        'react'],
+
+    cards: null,
+
     setCard: function (id) {
 
         // id da carta flipada
@@ -53,18 +66,12 @@ let game = {
         this.clearCards();
     },
 
-    techs: ['bootstrap',
-        'css',
-        'html',
-        'electron',
-        'firebase',
-        'javascript',
-        'jquery',
-        'mongo',
-        'node',
-        'react'],
+    checkGameOver: function () {
 
-    cards: null,
+        // se não houver nenhuma carta virada para baixo retorna true
+        return this.cards.filter(card => !card.flipped).length == 0
+    },
+
 
     createCardsFromTechs: function () {
 
