@@ -89,30 +89,36 @@ function flipCard() {
         // adiciona a classe flip para virar a carta
         this.classList.add('flip')
 
-        // checando se as cartas são iguais
-        if (game.checkMatch()) {
+        // se houver a segunda carta
+        if (game.secondCard) {
 
-            // destravando as cartas
-            game.clearCards()
+            // checar se as cartas são iguais
+            if (game.checkMatch()) {
+
+                // destravar as cartas
+                game.clearCards()
+
+            // se não, desvirar as cartas
+            } else {
+
+                setTimeout(() => {
+
+                    const firstCardView = document.getElementById(game.firstCard.id);
+                    const secondCardView = document.getElementById(game.secondCard.id);
+
+                    // removendo a classe flip caso não  haja match
+                    firstCardView.classList.remove('flip');
+                    secondCardView.classList.remove('flip');
+
+                    // limpando as cartas
+                    game.unflipCards();
+                }, 1000);
 
 
-        } else {
-
-            setTimeout(() => {
-
-                const firstCardView = document.getElementById(game.firstCard.id);
-                const secondCardView = document.getElementById(game.secondCard.id);
-
-                // removendo a classe flip caso não  haja match
-                firstCardView.classList.remove('flip');
-                secondCardView.classList.remove('flip');
-
-                // limpando as cartas
-                game.clearCards();
-            }, 1000);
+            };
+        }
 
 
-        };
 
     };
 }
