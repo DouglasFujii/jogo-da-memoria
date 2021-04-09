@@ -2,6 +2,14 @@ const FRONT = 'card_front';
 const BACK = 'card_back';
 const CARD = 'card';
 const ICON = 'icon';
+const hudTimer = document.getElementById('timer');
+let timer = 0;
+let seconds = 0;
+let minutes = 0;
+let hours = 0;
+let makeMove = false;
+
+
 
 // cria as cartas do tabuleiro
 game.createCardsFromTechs();
@@ -86,6 +94,11 @@ function createCardFace(face, card, element) {
 
 function flipCard() {
 
+    // inicia quando o jogador faz um movimento. Essa checagem é necessária, pois cada movimento do jogador iria executar a função novamente, fazendo o contador acelerar. O método setInterval executa inifitamente a cada invervalo passado
+    if (!makeMove) {
+        timer = setInterval(countTime, 1000);
+        makeMove = true;
+    }
     // quando a carta for clicada e colocada em firstCard ou secondCard 
     if (game.setCard(this.id)) {
 
@@ -146,6 +159,7 @@ function restart() {
         // embaralha as cartas
         game.shuffleCards();
 
+        // recomeça o jogo;
         startGame();
 
         // remover a tela de game over
@@ -159,9 +173,47 @@ function restart() {
 
 function flipAllCards() {
 
+    // para cada carta em cards coloca ou remove a classe flip
     game.cards.forEach(card => {
         const currentCard = document.getElementById(card.id);
+
+        // propriedade toggle coloca a classe flip se não houver ou remove caso contrário
         currentCard.classList.toggle('flip');
     })
+
+}
+
+function countTime() {
+    seconds = parseInt(seconds);
+    minutes = parseInt(minutes);
+    hours = parseInt(hours);
+
+    seconds++;
+
+    // formata o número para aparecer o zero antes
+    if (seconds < 10) {
+        seconds = '0' + seconds
+    }
+
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
+
+    if (hours < 10) {
+        hours = '0' + hours;
+    }
+
+    if (seconds >= 60) {
+        minutes += 1;
+        seconds = '00';
+    }
+
+    if (minutes >= 60) {
+        hours += 1;
+        minutes = '00'
+    }
+
+    // coloca na tela o tempo
+    hudTimer.innerHTML = hours + ':' + minutes + ':' + seconds;
 
 }
