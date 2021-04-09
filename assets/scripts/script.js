@@ -3,16 +3,16 @@ const BACK = 'card_back';
 const CARD = 'card';
 const ICON = 'icon';
 
+// cria as cartas do tabuleiro
+game.createCardsFromTechs();
+
+// coloca as cartas na tela
 startGame();
 
+// começando com as cartas viradas e não embaralhadas
+flipAllCards();
+
 function startGame() {
-
-    // cria as cartas do tabuleiro
-    initializeCards(game.createCardsFromTechs());
-
-}
-
-function initializeCards(cards) {
     const gameBoard = document.getElementById('gameBoard');
 
     // limpa o game board
@@ -22,13 +22,13 @@ function initializeCards(cards) {
     game.cards.forEach(card => {
 
         // cria a div
-        const cardElement = document.createElement('div')
+        const cardElement = document.createElement('div');
 
         // atribui o id de card para o elemento html
-        cardElement.id = card.id
+        cardElement.id = card.id;
 
         // adiciona a classe do elemento
-        cardElement.classList.add(CARD)
+        cardElement.classList.add(CARD);
 
         // adiciona o data-icon do elemento que será a verificação de par
         cardElement.dataset.icon = card.icon;
@@ -37,10 +37,10 @@ function initializeCards(cards) {
         createCardContent(card, cardElement);
 
         // adiciona o evento de click para virar a carta
-        cardElement.addEventListener('click', flipCard)
+        cardElement.addEventListener('click', flipCard);
 
         // coloca o elemento no tabuleiro
-        gameBoard.appendChild(cardElement)
+        gameBoard.appendChild(cardElement);
     })
 }
 
@@ -80,7 +80,7 @@ function createCardFace(face, card, element) {
         cardElementFace.innerHTML = "&lt/&gt";
     }
 
-    // colocar elemento
+    // colocar as faces da carta
     element.appendChild(cardElementFace);
 }
 
@@ -106,10 +106,14 @@ function flipCard() {
 
                     // mostrar a tela de game over
                     const gameOverLayer = document.getElementById('gameover');
-                    gameOverLayer.style.display = 'flex';
+
+                    setTimeout(() => {
+                        gameOverLayer.style.display = 'flex';
+                    }, 500)
+
                 };
 
-            // se não, desvirar as cartas
+                // se não, desvirar as cartas
             } else {
 
                 setTimeout(() => {
@@ -131,13 +135,33 @@ function flipCard() {
 
 function restart() {
 
-    // remover as cartas das variáveis
-    game.clearCards();
+    flipAllCards();
 
-    // iniciar o game
-    startGame();
+    setTimeout(() => {
+        // remover as cartas das variáveis
+        game.clearCards();
 
-    // remover a tela de game over
-    const gameOverLayer = document.getElementById('gameover');
-    gameOverLayer.style.display = 'none';
+        game.createCardsFromTechs();
+
+        // embaralha as cartas
+        game.shuffleCards();
+
+        startGame();
+
+        // remover a tela de game over
+        const gameOverLayer = document.getElementById('gameover');
+        gameOverLayer.style.display = 'none';
+
+    }, 700);
+
+
+}
+
+function flipAllCards() {
+
+    game.cards.forEach(card => {
+        const currentCard = document.getElementById(card.id);
+        currentCard.classList.toggle('flip');
+    })
+
 }

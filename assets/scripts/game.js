@@ -87,7 +87,7 @@ let game = {
         this.cards = this.cards.flatMap(pair => pair);
 
         //  embaralha as cartas
-        this.shuffleCards();
+        // this.shuffleCards();
 
         return this.cards;
 
@@ -115,7 +115,7 @@ let game = {
 
     },
 
-    shuffleCards: function (cards) {
+    shuffleCards: function () {
 
         // index começa com o último elemento
         let currentIndex = this.cards.length;
