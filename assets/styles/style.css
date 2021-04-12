@@ -25,13 +25,9 @@ body {
 .card {
     width: 150px;
     height: 150px;
-    position: relative;
-
-    /* preserva o estado 3D da carta para que seja virada e mostre a outra face */
-    transform-style: preserve-3d;
-
-    /* animação para virar a carta */
-    transition: transform .5s;
+    position: relative;    
+    transform-style: preserve-3d; /* preserva o estado 3D da carta para que seja virada e mostre a outra face */    
+    transition: transform .5s; /* animação para virar a carta */
 }
 
 .card_front, .card_back {
@@ -42,15 +38,12 @@ body {
     justify-content: center;
     align-items: center;
     border-radius: 20px;
-    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.45);
-
-    /* todas as faces invertidas não são visiveis */
-    backface-visibility: hidden;
+    box-shadow: 7px 7px 7px rgba(0, 0, 0, 0.45);    
+    backface-visibility: hidden; /* todas as faces invertidas não são visiveis */
 }
 
-.card_front {
-    /* inverte a frente da carta */
-    transform: rotateY(180deg);
+.card_front {    
+    transform: rotateY(180deg); /* inverte a frente da carta */
     background-color: #101c2c;
 }
 
@@ -89,4 +82,29 @@ button {
     border-radius: 10px;
     margin-top: 10px;
     font-family: 'Righteous', sans-serif;
+}
+
+/* ------------------------- scoreBoard ---------------------- */
+
+#scoreboard {
+    font-size: 30px;
+    position: absolute;
+    left: 0;
+    margin-left: 8vw;
+    background-color: #101c2c;
+    color: white;
+    height: 300px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 20px;
+}
+
+#timerBoard, #moveBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

@@ -3,11 +3,14 @@ const BACK = 'card_back';
 const CARD = 'card';
 const ICON = 'icon';
 const hudTimer = document.getElementById('timer');
+const showMoves = document.getElementById('moves');
+let moves = '00';
 let timer = 0;
 let seconds = 0;
 let minutes = 0;
 let hours = 0;
 let makeMove = false;
+
 
 
 
@@ -97,6 +100,9 @@ function flipCard() {
     // inicia quando o jogador faz um movimento. Essa checagem é necessária, pois cada movimento do jogador iria executar a função novamente, fazendo o contador acelerar. O método setInterval executa inifitamente a cada invervalo passado
     if (!makeMove) {
         timer = setInterval(countTime, 1000);
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
         makeMove = true;
     }
     // quando a carta for clicada e colocada em firstCard ou secondCard 
@@ -108,6 +114,9 @@ function flipCard() {
         // se houver a segunda carta
         if (game.secondCard) {
 
+            // adiciona movimento se colocar alguma carta em secondCard
+            addMove();
+
             // checar se as cartas são iguais
             if (game.checkMatch()) {
 
@@ -116,6 +125,9 @@ function flipCard() {
 
                 // checar game over
                 if (game.checkGameOver()) {
+
+                    // parar timer
+                    clearInterval(timer);
 
                     // mostrar a tela de game over
                     const gameOverLayer = document.getElementById('gameover');
@@ -149,6 +161,14 @@ function flipCard() {
 function restart() {
 
     flipAllCards();
+
+    // reinicia o timer
+    hudTimer.innerHTML = '00:00:00';
+    makeMove = false;
+
+    // reinicia o contador
+    showMoves.innerHTML = '00';
+    moves = '00';
 
     setTimeout(() => {
         // remover as cartas das variáveis
@@ -216,4 +236,18 @@ function countTime() {
     // coloca na tela o tempo
     hudTimer.innerHTML = hours + ':' + minutes + ':' + seconds;
 
+}
+
+function addMove() {
+
+    // transforma a string de moves em numero para ser incrementado
+    moves = parseInt(moves);
+    moves++;
+
+    // se moves for menor que 10, mostrar o zero antes do número
+    if (moves < 10) {
+        showMoves.innerHTML = '0' + moves;
+    } else {
+        showMoves.innerHTML = moves;
+    }
 }

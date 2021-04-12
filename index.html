@@ -13,7 +13,18 @@
 
 <body>
 
-    <div id="timer">00:00:00</div>
+    <div id="scoreboard">
+        <div id="timerBoard">
+            <p>tempo</p>
+            <span id="timer">00:00:00</span>
+        </div>
+        <div id="moveBoard">
+            <p>movimentos</p>
+            <span id="moves">00</span>
+        </div>
+
+    </div>
+
 
     <div id="gameBoard">
         <!-- estrutura da carta -->
@@ -31,7 +42,7 @@
 
     <div id="gameover">
         <div>
-            <h1>JOGO DA MEMÓRIA</h1>
+            <h1 id="title">JOGO DA MEMÓRIA</h1>
         </div>
 
         <button id="restart" onclick="restart()">Começar!</button>
