@@ -84,6 +84,13 @@ button {
     font-family: 'Righteous', sans-serif;
 }
 
+#gameOverText {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 /* ------------------------- scoreBoard ---------------------- */
 
 #scoreboard {

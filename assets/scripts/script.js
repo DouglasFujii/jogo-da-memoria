@@ -4,6 +4,7 @@ const CARD = 'card';
 const ICON = 'icon';
 const hudTimer = document.getElementById('timer');
 const showMoves = document.getElementById('moves');
+const gameOverLayer = document.getElementById('gameover');
 let moves = '00';
 let timer = 0;
 let seconds = 0;
@@ -129,12 +130,8 @@ function flipCard() {
                     // parar timer
                     clearInterval(timer);
 
-                    // mostrar a tela de game over
-                    const gameOverLayer = document.getElementById('gameover');
-
-                    setTimeout(() => {
-                        gameOverLayer.style.display = 'flex';
-                    }, 500)
+                    // mostrar tela final
+                    showGameOverLayer();
 
                 };
 
@@ -182,8 +179,7 @@ function restart() {
         // recomeça o jogo;
         startGame();
 
-        // remover a tela de game over
-        const gameOverLayer = document.getElementById('gameover');
+        // remover a tela de game over 
         gameOverLayer.style.display = 'none';
 
     }, 700);
@@ -250,4 +246,75 @@ function addMove() {
     } else {
         showMoves.innerHTML = moves;
     }
+}
+
+function showGameOverLayer() {
+
+    const gameOverText = document.getElementById('gameOverText');
+    const title = document.createElement('h1');
+    const p1 = document.createElement('p');
+    const p2 = document.createElement('p');
+
+    gameOverText.innerHTML = '';
+    title.innerHTML = 'Parabéns!'
+    gameOverText.appendChild(title);
+
+    p1.innerHTML = 'Você completou o jogo!';
+    gameOverText.appendChild(p1);
+
+    p2.style.margin = '25 px 0 0 0';
+
+    p2.innerHTML = 'Seu tempo total foi de ' + printTime(parseInt(hours), parseInt(minutes), parseInt(seconds));
+    gameOverText.appendChild(p2);
+
+    setTimeout(() => {
+        // mostrar a tela de game over
+        gameOverLayer.style.display = 'flex';
+    }, 500)
+
+
+}
+
+function printTime(h, m, s) {
+
+    let res = '';
+    let arr = [];
+
+    if (h != 0) {
+        if (h === 1) {
+            arr.push(h + ' hora');
+        } else {
+            arr.push(h + ' horas');
+        }        
+    }
+
+    if (m != 0) {
+        if (m === 1) {
+            arr.push(m + ' minuto');
+        } else {
+            arr.push(m + ' minutos');
+        }
+    }
+
+    if (s != 0) {
+        if(s === 1) {
+            arr.push(s + ' segundo');
+        } else {
+            arr.push(s + ' segundos')
+        }
+    }
+
+    if (arr.length === 3) {
+        res = arr[0] + ' , ' + arr[1] + ' e ' + arr[2] + '.'; 
+    }
+
+    if (arr.length === 2) {
+        res = arr[0] + ' e ' + arr[1] + '.';
+    }
+
+    if (arr.length === 1) {
+        res = arr[0] + '.';
+    }
+
+    return res;
 }
