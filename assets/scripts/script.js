@@ -251,9 +251,12 @@ function addMove() {
 function showGameOverLayer() {
 
     const gameOverText = document.getElementById('gameOverText');
+    const restartButton = document.getElementById('restart');
     const title = document.createElement('h1');
     const p1 = document.createElement('p');
     const p2 = document.createElement('p');
+    const p3 = document.createElement('p');
+    const p4 = document.createElement('p');
 
     gameOverText.innerHTML = '';
     title.innerHTML = 'Parabéns!'
@@ -264,8 +267,16 @@ function showGameOverLayer() {
 
     p2.style.margin = '25 px 0 0 0';
 
-    p2.innerHTML = 'Seu tempo total foi de ' + printTime(parseInt(hours), parseInt(minutes), parseInt(seconds));
+    p2.innerHTML = printTime(parseInt(hours), parseInt(minutes), parseInt(seconds));
     gameOverText.appendChild(p2);
+
+    p3.innerHTML = printMoves(moves);
+    gameOverText.appendChild(p3);
+
+    p4.innerHTML = printResult(parseInt(moves));
+    gameOverText.appendChild(p4);
+
+    restartButton.innerHTML = 'Reiniciar o jogo';
 
     setTimeout(() => {
         // mostrar a tela de game over
@@ -277,7 +288,7 @@ function showGameOverLayer() {
 
 function printTime(h, m, s) {
 
-    let res = '';
+    let res = 'Seu tempo total foi de ';
     let arr = [];
 
     if (h != 0) {
@@ -305,15 +316,44 @@ function printTime(h, m, s) {
     }
 
     if (arr.length === 3) {
-        res = arr[0] + ' , ' + arr[1] + ' e ' + arr[2] + '.'; 
+        res += arr[0] + ' , ' + arr[1] + ' e ' + arr[2] + '.'; 
     }
 
     if (arr.length === 2) {
-        res = arr[0] + ' e ' + arr[1] + '.';
+        res += arr[0] + ' e ' + arr[1] + '.';
     }
 
     if (arr.length === 1) {
-        res = arr[0] + '.';
+        res += arr[0] + '.';
+    }
+
+    return res;
+}
+
+function printMoves(moves) {
+
+    return 'Você terminou o jogo com ' + moves + ' movimentos!';
+
+}
+
+function printResult(moves) {
+
+    let res = '';
+
+    if (moves === 10) {
+        res = 'Espera, se você não errou nenhum movimento, acho que descobriu o segredo...'
+    }
+
+    if (moves > 10 && moves <= 15) {
+        res = 'Performace incrível! Para melhorar, só descobrindo o segredo...'
+    }
+
+    if (moves > 15 && moves <= 30) {
+        res = 'Você foi muito bem, só que consegue melhorar ainda mais!'
+    }
+
+    if (moves > 30) {
+        res = 'Vamos lá, você consegue melhorar!'
     }
 
     return res;
